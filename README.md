@@ -1,6 +1,6 @@
 # Nibbler
 
-"By far the best ICCF analysis tool for Leela." &mdash; *jhorthos*
+_"By far the best ICCF analysis tool for Leela." &mdash; *jhorthos*_
 
 Nibbler is a real-time analysis GUI for [Leela Chess Zero](http://lczero.org/play/quickstart/) (Lc0), which runs Leela in the background and constantly displays opinions about the current position. You can also compel the engine to evaluate one or more specific moves. Nibbler is loosely inspired by [Lizzie](https://github.com/featurecat/lizzie) and [Sabaki](https://github.com/SabakiHQ/Sabaki).
 
@@ -81,4 +81,5 @@ Leela running out of RAM can be a problem if searches go on too long. You might 
 
 Thanks to everyone in Discord and GitHub who's offered advice and suggestions; and thanks to all Lc0 devs and GPU-hours contributors!
 
-The pieces are from [Lichess](https://lichess.org/).
+The default pieces are from [Lichess](https://lichess.org/).
+On the other hand the one I use in my specific configuration are from chess.com.
