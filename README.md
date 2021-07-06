@@ -8,9 +8,9 @@ These days, Nibbler more-or-less works with traditional engines like [Stockfish]
 
 For prebuilt binary releases, see the [Releases](https://github.com/Jac-Zac/Nibbler_MacOS/releases/tag/2.1.7) section. For help, the [Discord](https://discordapp.com/invite/pKujYxD) may be your best bet, or open an issue here.
 
-![Screenshot]()
+![Screenshot](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/showcase.png)
 
-# Features
+## Features
 
 * Display Leela's top choices graphically.
 * Winrate graph.
@@ -24,24 +24,52 @@ For prebuilt binary releases, see the [Releases](https://github.com/Jac-Zac/Nibb
 * FEN loading.
 * Chess 960.
 
-# Installation - the simple way
+## Installation - the simple way
 
-Some Windows and Linux standalone releases are uploaded to the [Releases](https://github.com/rooklift/nibbler/releases) section from time to time. Mac builds are harder to make but [@twoplan](https://github.com/twoplan) is experimenting with it in [this repo](https://github.com/twoplan/Nibbler-for-macOS).
+Some MacOS standalone releases are uploaded to the [Releases](https://github.com/Jac-Zac/Nibbler_MacOS/releases/tag/2.1.7) section from time to time.
 
-# Installation - the hard way
+When you download it you have some things including **nibbler.app**
 
-Running Nibbler from source requires Electron, but has no other dependencies. If you have Electron installed (e.g. `npm install -g electron`) you can likely enter the `/src` directory, then do `electron .` to run it. Nibbler should be compatible with at least version 5 and above.
+## Installation - the hard way
 
-You could also build a standalone app. See comments inside the Python script `builder.py` for info.
+> I have not tested this lately but I'll try and check that it all works and perhaps even create an automated script.
 
-# Advanced engine options
+Running Nibbler from source requires Electron. If you do not have it, to install it run `npm install -g electron`.
+
+Now you can run the following commands: 
+
+```
+npx create-electron-app Nibbler
+```
+
+Then you can `cd Nibbler` to get into the folder and `rm -r src`. At this point you can download the current src from [here](https://github.com/rooklift/nibbler) and put that instead of the old src.
+
+At this point you should `cd src` and `mv main.js index.js`. And at this point you can:
+
+```
+npm run make
+```
+
+Which creates your own version of the app.
+
+## My custom configuration
+
+I have customized my App to have it look a bit nicer in my set up, this is how it turned out:
+
+![Screenshot](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/my_setup.jpg)
+
+> The colors I used follow the nord theme. And also got rid of the annoying title bar. 
+
+I'll perhaps add how I did it in the future.
+
+## Advanced engine options
 
 Most people won't need them, but all of Leela's engine options can be set in two ways:
 
 * Leela automatically loads options from a file called `lc0.config` at startup - see [here](https://lczero.org/play/configuration/flags/#config-file).
 * Nibbler will send UCI options specified in Nibbler's own `engines.json` file (which you can find via the Dev menu).
 
-# Hints and tips
+## Hints and tips
 
 An option to enable the UCI `searchmoves` feature is available in the Analysis menu. Once enabled, one or more moves can be specified as moves to focus on; Leela will ignore other moves. This is useful when you think Leela isn't giving a certain move enough attention.
 
@@ -49,7 +77,7 @@ Leela forgets much of the evaluation if the position changes. To mitigate this, 
 
 Leela running out of RAM can be a problem if searches go on too long. You might like to set a reasonable node limit (in the Engine menu), perhaps 10 million or so.
 
-# Thanks
+## Thanks
 
 Thanks to everyone in Discord and GitHub who's offered advice and suggestions; and thanks to all Lc0 devs and GPU-hours contributors!
 
