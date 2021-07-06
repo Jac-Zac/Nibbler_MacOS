@@ -8,7 +8,7 @@ These days, Nibbler more-or-less works with traditional engines like [Stockfish]
 
 For prebuilt binary releases, see the [Releases](https://github.com/Jac-Zac/Nibbler_MacOS/releases/tag/2.1.7) section. For help, the [Discord](https://discordapp.com/invite/pKujYxD) may be your best bet, or open an issue here.
 
-![Screenshot](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/showcase.png)
+![showcase1](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/showcase.png)
 
 ## Features
 
@@ -56,7 +56,7 @@ Which creates your own version of the app.
 
 I have customized my App to have it look a bit nicer in my set up, this is how it turned out:
 
-![Screenshot](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/my_setup.jpg)
+![showcase1](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/my_setup.png)
 
 > The colors I used follow the nord theme. And also got rid of the annoying title bar. 
 
