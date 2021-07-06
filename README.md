@@ -82,4 +82,4 @@ Leela running out of RAM can be a problem if searches go on too long. You might 
 Thanks to everyone in Discord and GitHub who's offered advice and suggestions; and thanks to all Lc0 devs and GPU-hours contributors!
 
 The default pieces are from [Lichess](https://lichess.org/).
-On the other hand the one I use in my specific configuration are from chess.com.
+On the other hand the one I use in my specific configuration are from [chess.com](https://www.chess.com/).
