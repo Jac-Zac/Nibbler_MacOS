@@ -28,29 +28,19 @@ For prebuilt binary releases, see the [Releases](https://github.com/Jac-Zac/Nibb
 
 Some MacOS standalone releases are uploaded to the [Releases](https://github.com/Jac-Zac/Nibbler_MacOS/releases/tag/2.1.7) section from time to time.
 
-When you download it you have some things including **nibbler.app**
+When you download it you have other things like a version of stokfish and lc0.
 
-## Installation - the hard way
+## Installation - the most up to date way
 
-> I have not tested this lately but I'll try and check that it all works and perhaps even create an automated script.
+##### Give executable permissions
 
-Running Nibbler from source requires Electron. If you do not have it, to install it run `npm install -g electron`.
+    chmod +x build_mac.sh
 
-Now you can run the following commands: 
+##### Run the script
 
-```
-npx create-electron-app Nibbler
-```
+    ./build_mac.sh
+> I'll try to keep the src file decently up to date but if you want the latest version just switch them out for the one from the [nibbler](https://github.com/rooklift/nibbler) original project.
 
-Then you can `cd Nibbler` to get into the folder and `rm -r src`. At this point you can download the current src from [here](https://github.com/rooklift/nibbler) and put that instead of the old src.
-
-At this point you should `cd src` and `mv main.js index.js`. And at this point you can:
-
-```
-npm run make
-```
-
-Which creates your own version of the app.
 
 ## My custom configuration
 
