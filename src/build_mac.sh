@@ -7,13 +7,16 @@ BOLD=$(tput bold)
 NORM=$(tput sgr0)
 
 ArmPrefix="/opt"
-IntelPrefix="/usr/local"
+IntelPrefix="/usr/local/bin"
 
 # If brew is installed exit else brew install
-if [ "$(ls ${ArmPrefix} | grep homebrew )" = "homebrew" ] || [ "$(ls ${IntelPrefix} | grep homebrew)" = "homebrew" ] ; then
+if [ "$(ls ${ArmPrefix} | grep homebrew )" = "homebrew" ] || [ "$(ls ${IntelPrefix} | grep brew)" = "brew" ] ; then
     
     # Install npm if not installed
     brew install node
+
+    # Get to the correct directory 
+    cd ..
 
     # Install requirement electron
     npm install -g electron
@@ -56,7 +59,7 @@ if [ "$(ls ${ArmPrefix} | grep homebrew )" = "homebrew" ] || [ "$(ls ${IntelPref
     cd ../../../
     
     # Change icon
-    mv assets/nibbler.icns /Applications/Nibbler.app/Contents/Resources/electron.icns
+    mv src/misc/nibbler.icns /Applications/Nibbler.app/Contents/Resources/electron.icns
     
 else
     echo "${RED}You have to install brew follow the instruction -> ${NC}${BOLD}https://docs.brew.sh/Installation${NORM}"
