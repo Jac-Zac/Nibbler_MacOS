@@ -1,0 +1,24 @@
+State logic
+As of 2020-05-26:
+                                                   /-----------> halt()
+                                                   |
+            1                                      |
+"bestmove" --> move() --> position_changed() --> behave() -----> go()
+                              ^       |            ^              ^
+                              |       |            |              |
+User changes POSITION --------/       \----> set_behaviour()      |
+                                     2             ^              |
+                                                   |              |
+User changes BEHAVIOUR ----------------------------/              |
+                                            3                     |
+                                                                  |
+User changes SEARCHMOVES -----> handle_searchmoves_change() ------/
+                                                                  |
+                                                                  |
+User changes NODE LIMITS ------> handle_node_limit_change() ------/
+
+
+Notes:
+1. Only with relevant behaviour setting
+2. This path only sets "halt"
+3. Except that "analysis_locked" has its own function go_and_lock()

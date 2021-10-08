@@ -33,7 +33,7 @@ if [ "$(ls ${ArmPrefix} | grep homebrew )" = "homebrew" ] || [ "$(ls ${IntelPref
     cd ..
     
     # move everything into the new src
-    mv src Nibbler/
+    cp -r src Nibbler/
     
     cd Nibbler/src
     

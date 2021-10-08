@@ -47,7 +47,7 @@ I have customized my App to have it look a bit nicer in my set up, this is how i
 
 > The colors I used follow the nord theme. And also got rid of the annoying title bar. 
 
-*Those are the [`default`](src/original_src) src, and you can find [`mine here`](src/app)*
+*Those are the [`default`](src) src, and you can find [`mine here`](my_config)*
 
 ## Advanced engine options
 
