@@ -34,7 +34,7 @@ When you download it you have other things like a version of stokfish and lc0.
 
 ##### Change directory, give executable permission and run the file 
 
-    cd src && chmod +x build_mac.sh && ./build_mac.sh`
+    cd src && chmod +x build_mac.sh && ./build_mac.sh
 
 > I'll try to keep the src file decently up to date but if you want the latest version just switch them out for the one from the [nibbler](https://github.com/rooklift/nibbler) original project.
 
