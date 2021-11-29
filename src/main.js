@@ -755,12 +755,22 @@ function menu_build() {
 					type: "separator"
 				},
 				{
-					label: "Auto-evaluate whole line",
+					label: "Auto-evaluate line",
 					accelerator: "F12",
 					click: () => {
 						win.webContents.send("call", {
 							fn: "set_behaviour",
 							args: ["auto_analysis"]
+						});
+					}
+				},
+				{
+					label: "Auto-evaluate line, backwards",
+					accelerator: "Shift+F12",
+					click: () => {
+						win.webContents.send("call", {
+							fn: "set_behaviour",
+							args: ["back_analysis"]
 						});
 					}
 				},
