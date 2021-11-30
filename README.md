@@ -31,7 +31,7 @@ To download it from the zip file or you can clone the repo from the terminal:
 
     git clone https://github.com/Jac-Zac/Nibbler_MacOS.git
 
-> After having done that you can go in the Nibbler_MacOS directory and unzip the file Apple_Silicon.zip (if you are on an Apple Silicon Mac)
+> After having done that you can go in the Nibbler_MacOS directory and unzip the file Apple_Silicon.zip (if you are on an Apple Silicon Mac) or x86_64.7z (if you are on an x86_64 Mac)
 
 _When you download it you have other things like a version of stokfish and lc0._
 
