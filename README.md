@@ -3,10 +3,9 @@
 _"By far the best ICCF analysis tool for Leela." &mdash; *jhorthos*_
 
 Nibbler is a real-time analysis GUI for [Leela Chess Zero](http://lczero.org/play/quickstart/) (Lc0), which runs Leela in the background and constantly displays opinions about the current position. You can also compel the engine to evaluate one or more specific moves. Nibbler is loosely inspired by [Lizzie](https://github.com/featurecat/lizzie) and [Sabaki](https://github.com/SabakiHQ/Sabaki).
-
 These days, Nibbler more-or-less works with traditional engines like [Stockfish](https://stockfishchess.org/), too.
 
-For prebuilt binary releases, see the [Releases](https://github.com/Jac-Zac/Nibbler_MacOS/releases/tag/2.1.7) section. For help, the [Discord](https://discordapp.com/invite/pKujYxD) may be your best bet, or open an issue here.
+**If you have any issue, the [Discord](https://discordapp.com/invite/pKujYxD) may be your best bet, or open an issue here.**
 
 ![showcase1](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/showcase.png)
 
@@ -26,9 +25,15 @@ For prebuilt binary releases, see the [Releases](https://github.com/Jac-Zac/Nibb
 
 ## Installation - the simple way
 
-Some MacOS standalone releases are uploaded to the [Releases](https://github.com/Jac-Zac/Nibbler_MacOS/releases/tag/2.1.7) section from time to time.
+**Some MacOS standalone releases are uploaded in the repo with the 7z extension.**
 
-When you download it you have other things like a version of stokfish and lc0.
+To download it from the zip file or you can clone the repo from the terminal:
+
+    git clone https://github.com/Jac-Zac/Nibbler_MacOS.git
+
+> After having done that you can go in the Nibbler_MacOS directory and unzip the file Apple_Silicon.zip (if you are on an Apple Silicon Mac)
+
+_When you download it you have other things like a version of stokfish and lc0._
 
 ## Installation - the most up to date way
 
