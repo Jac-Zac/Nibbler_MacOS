@@ -25,13 +25,9 @@ These days, Nibbler more-or-less works with traditional engines like [Stockfish]
 
 ## Installation - the simple way
 
-**Some MacOS standalone releases are uploaded in the repo with the 7z extension.**
+**Some MacOS standalone releases are uploaded every now and then under [Release](https://github.com/Jac-Zac/Nibbler_MacOS/releases)**
 
-To download it from the zip file or you can clone the repo from the terminal:
-
-    git clone https://github.com/Jac-Zac/Nibbler_MacOS.git
-
-> After having done that you can go in the Nibbler_MacOS directory and unzip the file Apple_Silicon.zip (if you are on an Apple Silicon Mac) or x86_64.7z (if you are on an x86_64 Mac)
+*You download the right file for your computer architecture, open it with any utility that can decompress it and then you can find the app in there.*
 
 _When you download it you have other things like a version of stokfish and lc0._
 
