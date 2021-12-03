@@ -29,6 +29,8 @@ These days, Nibbler more-or-less works with traditional engines like [Stockfish]
 
 *You download the right file for your computer architecture, open it with any utility that can decompress it and then you can find the app in there.*
 
+If you are on Apple Silicon the Nibbler.app can be downloaded by downloading the Nibbler.dmg and then running `xattr -cr Nibbler.dmg`
+
 _When you download it you have other things like a version of stokfish and lc0._
 
 ## Installation - the most up to date way
