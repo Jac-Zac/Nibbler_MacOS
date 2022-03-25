@@ -39,7 +39,7 @@ let hub_props = {
 	// ---------------------------------------------------------------------------------------------------------------------
 	// Core methods wrt our main state...
 
-	behave: function(reason) {			// reason should be "position" or "behaviour"
+	behave: function(reason) {							// reason should be "position" or "behaviour"
 
 		// Called when position changes.
 		// Called when behaviour changes.
@@ -50,6 +50,10 @@ let hub_props = {
 		//		Call __halt() to ensure the engine isn't running
 		//		Nothing, iff the correct search is already running
 
+		if (reason !== "position" && reason !== "behaviour") {
+			throw "behave(): bad call";
+		}
+
 		switch (config.behaviour) {
 
 		case "halt":
@@ -58,14 +62,22 @@ let hub_props = {
 			break;
 
 		case "analysis_free":
-		case "auto_analysis":
-		case "back_analysis":
 
 			// Note that the 2nd part of the condition is needed because changing behaviour can change what node_limit()
 			// returns, therefore we might already be running a search for the right node but with the wrong limit.
 			// THIS IS TRUE THROUGHOUT THIS FUNCTION.
 
 			if (this.engine.search_desired.node !== this.tree.node || this.engine.search_desired.limit !== this.node_limit()) {
+				this.__go(this.tree.node);
+			}
+			break;
+
+		case "auto_analysis":
+		case "back_analysis":
+
+			if (this.tree.node.terminal_reason()) {
+				this.continue_auto_analysis();				// This can get a bit recursive, do we care?
+			} else if (this.engine.search_desired.node !== this.tree.node || this.engine.search_desired.limit !== this.node_limit()) {
 				this.__go(this.tree.node);
 			}
 			break;
@@ -225,6 +237,23 @@ let hub_props = {
 		// If there's no search desired, changing params probably shouldn't start one. As of 1.8.3, when a search
 		// completes due to hitting the (normal) node limit, behaviour gets changed back to "halt" in one way or
 		// another (unless config.allow_stopped_analysis is set).
+	},
+
+	continue_auto_analysis: function() {
+
+		let ok;
+
+		if (config.behaviour === "auto_analysis") {
+			ok = this.tree.next();
+		} else if (config.behaviour === "back_analysis") {
+			ok = this.tree.prev();
+		}
+
+		if (ok) {
+			this.position_changed(false, false);
+		} else {
+			this.set_behaviour("halt");
+		}
 	},
 
 	maybe_setup_book_move: function() {
@@ -411,23 +440,12 @@ let hub_props = {
 		this.tick++;
 		this.draw();
 		this.purge_finished_loaders();
-		this.update_graph_eval(this.engine.search_running.node);		// Possibly null.
 		this.maybe_save_window_size();
 		setTimeout(this.spin.bind(this), config.update_delay);
 	},
 
 	purge_finished_loaders: function() {
 		this.loaders = this.loaders.filter(o => o.callback);
-	},
-
-	update_graph_eval: function(node) {
-		if (!node || node.destroyed) {
-			return;
-		}
-		let info = SortedMoveInfo(node)[0];								// Possibly undefined.
-		if (info) {
-			node.table.update_eval_from_move(info.move);
-		}
 	},
 
 	maybe_save_window_size: function() {
@@ -746,11 +764,13 @@ let hub_props = {
 		boardctx.clearRect(0, 0, canvas.width, canvas.height);
 		if (config.book_explorer) {
 			this.draw_explorer_arrows();
-			return;
+		} else if (config.lichess_explorer) {
+			this.draw_lichess_arrows();
+		} else {
+			let arrow_spotlight_square = config.click_spotlight ? this.active_square : null;
+			let next_move = (config.next_move_arrow && this.tree.node.children.length > 0) ? this.tree.node.children[0].move : null;
+			this.info_handler.draw_arrows(this.tree.node, arrow_spotlight_square, next_move);
 		}
-		let arrow_spotlight_square = config.click_spotlight ? this.active_square : null;
-		let next_move = (config.next_move_arrow && this.tree.node.children.length > 0) ? this.tree.node.children[0].move : null;
-		this.info_handler.draw_arrows(this.tree.node, arrow_spotlight_square, next_move);
 	},
 
 	draw_explorer_arrows: function() {
@@ -791,6 +811,53 @@ let hub_props = {
 		this.info_handler.draw_explorer_arrows(this.tree.node, this.explorer_objects_cache);
 	},
 
+	draw_lichess_arrows: function() {
+
+		// Modified version of the above.
+
+		let ok = true;
+
+		if (config.looker_api !== "lichess_masters" && config.looker_api !== "lichess_plebs") {
+			ok = false;
+		}
+
+		let entry = this.looker.lookup(config.looker_api, this.tree.node.board);
+
+		if (!entry) {
+			ok = false;
+		}
+
+		if (!ok) {
+			this.explorer_objects_cache = null;
+			this.explorer_cache_node_id = null;
+			this.info_handler.draw_explorer_arrows(this.tree.node, []);		// Needs to happen, to update the one_click_moves.
+			return;
+		}
+
+		if (!this.explorer_objects_cache || this.explorer_cache_node_id !== this.tree.node.id) {
+			let total_weight = 0;
+			for (let o of Object.values(entry.moves)) {
+				total_weight += o.total;
+			}
+			if (total_weight <= 0) {
+				total_weight = 1;		// Avoid div by zero.
+			}
+			let tmp = {};
+			for (let move of Object.keys(entry.moves)) {
+				if (!this.tree.node.board.illegal(move)) {
+					if (tmp[move] === undefined) {
+						tmp[move] = {move: move, weight: entry.moves[move].total / total_weight};
+					}
+				}
+			}
+			this.explorer_cache_node_id = this.tree.node.id;
+			this.explorer_objects_cache = Object.values(tmp);
+			this.explorer_objects_cache.sort((a, b) => b.weight - a.weight);
+		}
+
+		this.info_handler.draw_explorer_arrows(this.tree.node, this.explorer_objects_cache);
+	},
+
 	draw_statusbox: function() {
 
 		let analysing_other = null;
@@ -818,7 +885,8 @@ let hub_props = {
 			this.tree.node,
 			this.engine,
 			analysing_other,
-			loading_message
+			loading_message,
+			this.book ? true : false
 		);
 	},
 
@@ -854,9 +922,7 @@ let hub_props = {
 
 	receive_bestmove: function(s, relevant_node) {
 
-		this.update_graph_eval(relevant_node);		// Now's the last chance to update our graph eval for this node.
-
-		let ok;		// Used by 2 different parts of the switch.
+		let ok;		// Could be used by 2 different parts of the switch (but not at time of writing...)
 
 		switch (config.behaviour) {
 
@@ -890,19 +956,8 @@ let hub_props = {
 			if (relevant_node !== this.tree.node) {
 				LogBoth(`(ignored bestmove, relevant_node !== hub.tree.node, config.behaviour was "${config.behaviour}")`);
 				this.set_behaviour("halt");
-				break;
-			}
-
-			if (config.behaviour === "auto_analysis") {
-				ok = this.tree.next();
-			} else if (config.behaviour === "back_analysis") {
-				ok = this.tree.prev();
-			}
-
-			if (ok) {
-				this.position_changed(false, false);
 			} else {
-				this.set_behaviour("halt");
+				this.continue_auto_analysis();
 			}
 
 			break;
@@ -1405,10 +1460,22 @@ let hub_props = {
 	},
 
 	play_info_index: function(n) {
-		let info_list = SortedMoveInfo(this.tree.node);
-		if (typeof n === "number" && n >= 0 && n < info_list.length) {
-			if (info_list[n].__touched) {
-				this.move(info_list[n].move);
+
+		let line_starts = this.info_handler.info_clickers.filter(o => o.is_start);
+
+		if (n < line_starts.length) {
+
+			let move = line_starts[n].move;
+
+			let table_move = this.tree.node.table.moveinfo[move];
+
+			if (table_move && table_move.__touched) {		// Allow this to happen if the move is touched
+				this.move(move);
+			} else if (config.looker_api) {					// Allow this to happen if the move is in the selected API database
+				let db_entry = this.looker.lookup(config.looker_api, this.tree.node.board);
+				if (db_entry && db_entry.moves[move]) {
+					this.move(move);
+				}
 			}
 		}
 	},
@@ -2080,6 +2147,19 @@ let hub_props = {
 
 		// Cases that have additional actions after...
 
+		if (option === "book_explorer") {
+			config.lichess_explorer = false;
+			this.explorer_objects_cache = null;
+		}
+		if (option === "lichess_explorer") {
+			config.book_explorer = false;
+			this.explorer_objects_cache = null;
+		}
+		if (option === "look_past_25") {
+			if (config.look_past_25 && this.tree.node.board.fullmove > 25) {
+				this.looker.add_to_queue(this.tree.node.board);
+			}
+		}
 		if (option === "searchmoves_buttons") {
 			this.tree.node.searchmoves = [];		// This is reasonable regardless of which way the toggle went.
 			this.handle_search_params_change();
@@ -2128,6 +2208,8 @@ let hub_props = {
 		if (value) {
 			this.looker.add_to_queue(this.tree.node.board);
 		}
+
+		this.explorer_objects_cache = null;
 	},
 
 	invert_searchmoves: function() {

@@ -17,23 +17,36 @@ const table_prototype = {
 		this.nps = 0;							// Stat sent by engine
 		this.tbhits = 0;						// Stat sent by engine
 		this.time = 0;							// Stat sent by engine
+		this.limit = null;						// The limit of the last search that updated this.
+		this.terminal = null;					// null = unknown, "" = not terminal, "Non-empty string" = terminal reason
 		this.eval = null;						// Used by grapher only, value from White's POV
-		this.eval_nodes = 0;					// Number of search nodes used to generate the eval
+		this.eval_version = 0;					// Which version (above) was used to generate the eval
 		this.already_autopopulated = false;
 	},
 
-	update_eval_from_move: function(move) {
+	get_eval: function() {
+		if (this.eval_version === this.version) {
+			return this.eval;
+		} else {
+			let info = SortedMoveInfoFromTable(this)[0];
+			if (info && !info.__ghost && info.__touched && (this.nodes > 1 || this.limit === 1)) {
+				this.eval = info.board.active === "w" ? info.value() : 1 - info.value();
+			} else {
+				this.eval = null;
+			}
+			this.eval_version = this.version;
+			return this.eval;
+		}
+	},
 
-		// move should be the best move
-
-		let info = this.moveinfo[move];
-
-		if (!info || info.__ghost) return;
-
-		// if (info.uci_nodes < this.eval_nodes) return;	// This can feel unintuitive.
-
-		this.eval = info.board.active === "w" ? info.value() : 1 - info.value();
-		this.eval_nodes = info.uci_nodes;
+	set_terminal_info: function(reason, ev) {	// ev is ignored if reason is "" (i.e. not a terminal position)
+		if (reason) {
+			this.terminal = reason;
+			this.eval = ev;
+			this.eval_version = this.version;
+		} else {
+			this.terminal = "";
+		}
 	},
 
 	autopopulate: function(node) {
@@ -90,7 +103,7 @@ const info_prototype = {
 	// I'm not sure I've been conscientious everywhere in the code about checking whether these things are
 	// of the right type, so for that reason most are set to some neutralish value by default.
 	//
-	// Exceptions: m, v, wdl
+	// Exceptions: m, v, wdl (and note that all of these can be set to null by info.js)
 
 	clear_stats: function() {
 		this.cp = 0;

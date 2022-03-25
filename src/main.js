@@ -301,10 +301,7 @@ function menu_build() {
 							});
 							// Save the dir as the new default dir, in both processes.
 							config.pgn_dialog_folder = path.dirname(file);
-							win.webContents.send("set", {
-								key: "pgn_dialog_folder",
-								value: path.dirname(file)
-							});
+							win.webContents.send("set", {pgn_dialog_folder: path.dirname(file)});
 						}
 					}
 				},
@@ -340,10 +337,7 @@ function menu_build() {
 							});
 							// Save the dir as the new default dir, in both processes.
 							config.pgn_dialog_folder = path.dirname(file);
-							win.webContents.send("set", {
-								key: "pgn_dialog_folder",
-								value: path.dirname(file)
-							});
+							win.webContents.send("set", {pgn_dialog_folder: path.dirname(file)});
 						}
 					}
 				},
@@ -813,10 +807,7 @@ function menu_build() {
 							checked: config.ev_pov !== "w" && config.ev_pov !== "b",
 							click: () => {
 								set_checks("Analysis", "Winrate POV", "Current");
-								win.webContents.send("set", {
-									key: "ev_pov",
-									value: null,
-								});
+								win.webContents.send("set", {ev_pov: null});
 							}
 						},
 						{
@@ -825,10 +816,7 @@ function menu_build() {
 							checked: config.ev_pov === "w",
 							click: () => {
 								set_checks("Analysis", "Winrate POV", "White");
-								win.webContents.send("set", {
-									key: "ev_pov",
-									value: "w",
-								});
+								win.webContents.send("set", {ev_pov: "w"});
 							}
 						},
 						{
@@ -837,10 +825,7 @@ function menu_build() {
 							checked: config.ev_pov === "b",
 							click: () => {
 								set_checks("Analysis", "Winrate POV", "Black");
-								win.webContents.send("set", {
-									key: "ev_pov",
-									value: "b",
-								});
+								win.webContents.send("set", {ev_pov: "b"});
 							}
 						},
 					]
@@ -854,10 +839,7 @@ function menu_build() {
 							checked: config.cp_pov !== "w" && config.cp_pov !== "b",
 							click: () => {
 								set_checks("Analysis", "Centipawn POV", "Current");
-								win.webContents.send("set", {
-									key: "cp_pov",
-									value: null,
-								});
+								win.webContents.send("set", {cp_pov: null});
 							}
 						},
 						{
@@ -866,10 +848,7 @@ function menu_build() {
 							checked: config.cp_pov === "w",
 							click: () => {
 								set_checks("Analysis", "Centipawn POV", "White");
-								win.webContents.send("set", {
-									key: "cp_pov",
-									value: "w",
-								});
+								win.webContents.send("set", {cp_pov: "w"});
 							}
 						},
 						{
@@ -878,10 +857,7 @@ function menu_build() {
 							checked: config.cp_pov === "b",
 							click: () => {
 								set_checks("Analysis", "Centipawn POV", "Black");
-								win.webContents.send("set", {
-									key: "cp_pov",
-									value: "b",
-								});
+								win.webContents.send("set", {cp_pov: "b"});
 							}
 						},
 					]
@@ -895,10 +871,7 @@ function menu_build() {
 							checked: config.wdl_pov !== "w" && config.wdl_pov !== "b",
 							click: () => {
 								set_checks("Analysis", "Win / draw / loss POV", "Current");
-								win.webContents.send("set", {
-									key: "wdl_pov",
-									value: null,
-								});
+								win.webContents.send("set", {wdl_pov: null});
 							}
 						},
 						{
@@ -907,10 +880,7 @@ function menu_build() {
 							checked: config.wdl_pov === "w",
 							click: () => {
 								set_checks("Analysis", "Win / draw / loss POV", "White");
-								win.webContents.send("set", {
-									key: "wdl_pov",
-									value: "w",
-								});
+								win.webContents.send("set", {wdl_pov: "w"});
 							}
 						},
 						{
@@ -919,10 +889,7 @@ function menu_build() {
 							checked: config.wdl_pov === "b",
 							click: () => {
 								set_checks("Analysis", "Win / draw / loss POV", "Black");
-								win.webContents.send("set", {
-									key: "wdl_pov",
-									value: "b",
-								});
+								win.webContents.send("set", {wdl_pov: "b"});
 							}
 						},
 					]
@@ -939,10 +906,7 @@ function menu_build() {
 							checked: config.pv_click_event === 0,
 							click: () => {
 								set_checks("Analysis", "PV clicks", "Do nothing");
-								win.webContents.send("set", {
-									key: "pv_click_event",
-									value: 0,
-								});
+								win.webContents.send("set", {pv_click_event: 0});
 							}
 						},
 						{
@@ -951,10 +915,7 @@ function menu_build() {
 							checked: config.pv_click_event === 1,
 							click: () => {
 								set_checks("Analysis", "PV clicks", "Go there");
-								win.webContents.send("set", {
-									key: "pv_click_event",
-									value: 1,
-								});
+								win.webContents.send("set", {pv_click_event: 1});
 							}
 						},
 						{
@@ -963,10 +924,7 @@ function menu_build() {
 							checked: config.pv_click_event === 2,
 							click: () => {
 								set_checks("Analysis", "PV clicks", "Add to tree");
-								win.webContents.send("set", {
-									key: "pv_click_event",
-									value: 2,
-								});
+								win.webContents.send("set", {pv_click_event: 2});
 							}
 						},
 					]
@@ -1076,10 +1034,7 @@ function menu_build() {
 							accelerator: "F5",
 							click: () => {
 								set_checks("Display", "Arrowhead type", "Winrate");
-								win.webContents.send("set", {
-									key: "arrowhead_type",
-									value: 0,
-								});
+								win.webContents.send("set", {arrowhead_type: 0});
 							}
 						},
 						{
@@ -1089,10 +1044,7 @@ function menu_build() {
 							accelerator: "F6",
 							click: () => {
 								set_checks("Display", "Arrowhead type", "Node %");
-								win.webContents.send("set", {
-									key: "arrowhead_type",
-									value: 1,
-								});
+								win.webContents.send("set", {arrowhead_type: 1});
 							}
 						},
 						{
@@ -1102,10 +1054,7 @@ function menu_build() {
 							accelerator: "F7",
 							click: () => {
 								set_checks("Display", "Arrowhead type", "Policy");
-								win.webContents.send("set", {
-									key: "arrowhead_type",
-									value: 2,
-								});
+								win.webContents.send("set", {arrowhead_type: 2});
 							}
 						},
 						{
@@ -1115,10 +1064,7 @@ function menu_build() {
 							accelerator: "F8",
 							click: () => {
 								set_checks("Display", "Arrowhead type", "MultiPV rank");
-								win.webContents.send("set", {
-									key: "arrowhead_type",
-									value: 3,
-								});
+								win.webContents.send("set", {arrowhead_type: 3});
 							}
 						},
 						{
@@ -1127,10 +1073,7 @@ function menu_build() {
 							checked: config.arrowhead_type === 4,
 							click: () => {
 								set_checks("Display", "Arrowhead type", "Moves Left Head");
-								win.webContents.send("set", {
-									key: "arrowhead_type",
-									value: 4,
-								});
+								win.webContents.send("set", {arrowhead_type: 4});
 							}
 						},
 					]
@@ -1263,10 +1206,7 @@ function menu_build() {
 							checked: config.ab_filter_threshold === 0.15,
 							click: () => {
 								set_checks("Display", "Arrow filter (others)", "Diff < 15%");
-								win.webContents.send("set", {
-									key: "ab_filter_threshold",
-									value: 0.15
-								});
+								win.webContents.send("set", {ab_filter_threshold: 0.15});
 							}
 						},
 						{
@@ -1275,10 +1215,7 @@ function menu_build() {
 							checked: config.ab_filter_threshold === 0.1,
 							click: () => {
 								set_checks("Display", "Arrow filter (others)", "Diff < 10%");
-								win.webContents.send("set", {
-									key: "ab_filter_threshold",
-									value: 0.1
-								});
+								win.webContents.send("set", {ab_filter_threshold: 0.1});
 							}
 						},
 						{
@@ -1287,10 +1224,7 @@ function menu_build() {
 							checked: config.ab_filter_threshold === 0.05,
 							click: () => {
 								set_checks("Display", "Arrow filter (others)", "Diff < 5%");
-								win.webContents.send("set", {
-									key: "ab_filter_threshold",
-									value: 0.05
-								});
+								win.webContents.send("set", {ab_filter_threshold: 0.05});
 							}
 						},
 					]
@@ -1481,18 +1415,53 @@ function menu_build() {
 							}
 						},
 						{
-							label: "ChessDB.cn",
+							label: "ChessDB.cn evals",
 							type: "checkbox",
 							checked: config.looker_api === "chessdbcn",
 							click: () => {
-								set_checks("Display", "Online API", "ChessDB.cn");
+								set_checks("Display", "Online API", "ChessDB.cn evals");
 								win.webContents.send("call", {
 									fn: "set_looker_api",
 									args: ["chessdbcn"]
 								});
 							}
 						},
+						{
+							label: "Lichess results (masters)",
+							type: "checkbox",
+							checked: config.looker_api === "lichess_masters",
+							click: () => {
+								set_checks("Display", "Online API", "Lichess results (masters)");
+								win.webContents.send("call", {
+									fn: "set_looker_api",
+									args: ["lichess_masters"]
+								});
+							}
+						},
+						{
+							label: "Lichess results (plebs)",
+							type: "checkbox",
+							checked: config.looker_api === "lichess_plebs",
+							click: () => {
+								set_checks("Display", "Online API", "Lichess results (plebs)");
+								win.webContents.send("call", {
+									fn: "set_looker_api",
+									args: ["lichess_plebs"]
+								});
+							}
+						},
 					]
+				},
+				{
+					label: "Allow API after move 25",
+					type: "checkbox",
+					checked: config.look_past_25,
+					click: () => {
+						win.webContents.send("call", {
+							fn: "toggle",
+							args: ["look_past_25"],
+						});
+					}
 				},
 				{
 					type: "separator"
@@ -1518,10 +1487,7 @@ function menu_build() {
 							checked: config.hover_method === 0,
 							click: () => {
 								set_checks("Display", "Draw PV method", "Animate");
-								win.webContents.send("set", {
-									key: "hover_method",
-									value: 0
-								});
+								win.webContents.send("set", {hover_method: 0});
 							}
 						},
 						{
@@ -1530,10 +1496,7 @@ function menu_build() {
 							checked: config.hover_method === 1,
 							click: () => {
 								set_checks("Display", "Draw PV method", "Single move");
-								win.webContents.send("set", {
-									key: "hover_method",
-									value: 1
-								});
+								win.webContents.send("set", {hover_method: 1});
 							}
 						},
 						{
@@ -1542,10 +1505,7 @@ function menu_build() {
 							checked: config.hover_method === 2,
 							click: () => {
 								set_checks("Display", "Draw PV method", "Final position");
-								win.webContents.send("set", {
-									key: "hover_method",
-									value: 2
-								});
+								win.webContents.send("set", {hover_method: 2});
 							}
 						},
 					]
@@ -1571,10 +1531,7 @@ function menu_build() {
 									});
 									// Save the dir as the new default dir, in both processes.
 									config.pieces_dialog_folder = path.dirname(folder);
-									win.webContents.send("set", {
-										key: "pieces_dialog_folder",
-										value: path.dirname(folder)
-									});
+									win.webContents.send("set", {pieces_dialog_folder: path.dirname(folder)});
 								}
 							}
 						},
@@ -1616,10 +1573,7 @@ function menu_build() {
 									});
 									// Save the dir as the new default dir, in both processes.
 									config.background_dialog_folder = path.dirname(file);
-									win.webContents.send("set", {
-										key: "background_dialog_folder",
-										value: path.dirname(file)
-									});
+									win.webContents.send("set", {background_dialog_folder: path.dirname(file)});
 								}
 							}
 						},
@@ -1638,14 +1592,28 @@ function menu_build() {
 					type: "separator"
 				},
 				{
-					label: "Book explorer mode",
+					label: "Book frequency arrows",
 					type: "checkbox",
 					checked: config.book_explorer,			// But this is never saved in the config file.
 					click: () => {
 						win.webContents.send("call", {
 							fn: "toggle",
-							args: ["book_explorer"]
+							args: ["book_explorer"]			// The hub will automatically turn off lichess weights mode.
 						});
+						set_one_check(false, "Display", "Lichess frequency arrows");
+					}
+				},
+				{
+					label: "Lichess frequency arrows",
+					type: "checkbox",
+					accelerator: "CommandOrControl+E",
+					checked: config.lichess_explorer,		// But this is never saved in the config file.
+					click: () => {
+						win.webContents.send("call", {
+							fn: "toggle",
+							args: ["lichess_explorer"]		// The hub will automatically turn off book weights mode.
+						});
+						set_one_check(false, "Display", "Book frequency arrows");
 					}
 				},
 			]
@@ -2089,10 +2057,7 @@ function menu_build() {
 							checked: config.graph_line_width === 8,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "8");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 8,
-								});
+								win.webContents.send("set", {graph_line_width: 8});
 							}
 						},
 						{
@@ -2101,10 +2066,7 @@ function menu_build() {
 							checked: config.graph_line_width === 7,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "7");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 7,
-								});
+								win.webContents.send("set", {graph_line_width: 7});
 							}
 						},
 						{
@@ -2113,10 +2075,7 @@ function menu_build() {
 							checked: config.graph_line_width === 6,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "6");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 6,
-								});
+								win.webContents.send("set", {graph_line_width: 6});
 							}
 						},
 						{
@@ -2125,10 +2084,7 @@ function menu_build() {
 							checked: config.graph_line_width === 5,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "5");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 5,
-								});
+								win.webContents.send("set", {graph_line_width: 5});
 							}
 						},
 						{
@@ -2137,10 +2093,7 @@ function menu_build() {
 							checked: config.graph_line_width === 4,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "4");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 4,
-								});
+								win.webContents.send("set", {graph_line_width: 4});
 							}
 						},
 						{
@@ -2149,10 +2102,7 @@ function menu_build() {
 							checked: config.graph_line_width === 3,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "3");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 3,
-								});
+								win.webContents.send("set", {graph_line_width: 3});
 							}
 						},
 						{
@@ -2161,10 +2111,7 @@ function menu_build() {
 							checked: config.graph_line_width === 2,
 							click: () => {
 								set_checks("Sizes", "Graph lines", "2");
-								win.webContents.send("set", {
-									key: "graph_line_width",
-									value: 2,
-								});
+								win.webContents.send("set", {graph_line_width: 2});
 							}
 						},
 					]
@@ -2205,10 +2152,7 @@ function menu_build() {
 							});
 							// Save the dir as the new default dir, in both processes.
 							config.engine_dialog_folder = path.dirname(file);
-							win.webContents.send("set", {
-								key: "engine_dialog_folder",
-								value: path.dirname(file)
-							});
+							win.webContents.send("set", {engine_dialog_folder: path.dirname(file)});
 						} else {
 							win.webContents.send("call", "send_ack_engine");		// Force an ack IPC to fix our menu check state.
 						}
@@ -2241,10 +2185,7 @@ function menu_build() {
 									// Will receive an ack IPC which sets menu checks.
 									// Save the dir as the new default dir, in both processes.
 									config.weights_dialog_folder = path.dirname(file);
-									win.webContents.send("set", {
-										key: "weights_dialog_folder",
-										value: path.dirname(file)
-									});
+									win.webContents.send("set", {weights_dialog_folder: path.dirname(file)});
 								} else {
 									win.webContents.send("call", {						// Force an ack IPC to fix our menu check state.
 										fn: "send_ack_setoption",
@@ -2271,10 +2212,7 @@ function menu_build() {
 									// Will receive an ack IPC which sets menu checks.
 									// Save the dir as the new default dir, in both processes.
 									config.evalfile_dialog_folder = path.dirname(file);
-									win.webContents.send("set", {
-										key: "evalfile_dialog_folder",
-										value: path.dirname(file)
-									});
+									win.webContents.send("set", {evalfile_dialog_folder: path.dirname(file)});
 								} else {
 									win.webContents.send("call", {						// Force an ack IPC to fix our menu check state.
 										fn: "send_ack_setoption",
@@ -2425,6 +2363,45 @@ function menu_build() {
 							type: "separator"
 						},
 						{
+							label: "onnx-cuda",
+							type: "checkbox",
+							checked: false,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "set_uci_option_permanent",
+									args: ["Backend", "onnx-cuda"]
+								});
+								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
+							label: "onnx-cpu",
+							type: "checkbox",
+							checked: false,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "set_uci_option_permanent",
+									args: ["Backend", "onnx-cpu"]
+								});
+								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
+							label: "onednn",
+							type: "checkbox",
+							checked: false,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "set_uci_option_permanent",
+									args: ["Backend", "onednn"]
+								});
+								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
+							type: "separator"
+						},
+						{
 							label: "random",
 							type: "checkbox",
 							checked: false,
@@ -2435,6 +2412,21 @@ function menu_build() {
 								});
 								// Will receive an ack IPC which sets menu checks.
 							}
+						},
+						{
+							label: "trivial",
+							type: "checkbox",
+							checked: false,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "set_uci_option_permanent",
+									args: ["Backend", "trivial"]
+								});
+								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
+							type: "separator"
 						},
 						{
 							label: "roundrobin",
@@ -2495,10 +2487,7 @@ function menu_build() {
 							// Will receive an ack IPC which sets menu checks.
 							// Save the dir as the new default dir, in both processes.
 							config.syzygy_dialog_folder = path.dirname(folder);
-							win.webContents.send("set", {
-								key: "syzygy_dialog_folder",
-								value: path.dirname(folder)
-							});
+							win.webContents.send("set", {syzygy_dialog_folder: path.dirname(folder)});
 						} else {
 							win.webContents.send("call", {
 								fn: "send_ack_setoption",
@@ -3371,10 +3360,7 @@ function menu_build() {
 							// Will receive an ack IPC which sets menu checks.
 							// Save the dir as the new default dir, in both processes.
 							config.book_dialog_folder = path.dirname(file);
-							win.webContents.send("set", {
-								key: "book_dialog_folder",
-								value: path.dirname(file)
-							});
+							win.webContents.send("set", {book_dialog_folder: path.dirname(file)});
 						} else {
 							win.webContents.send("call", "send_ack_book");		// Force an ack IPC to fix our menu check state.
 						}
@@ -3399,10 +3385,7 @@ function menu_build() {
 							// Will receive an ack IPC which sets menu checks.
 							// Save the dir as the new default dir, in both processes.
 							config.book_dialog_folder = path.dirname(file);
-							win.webContents.send("set", {
-								key: "book_dialog_folder",
-								value: path.dirname(file)
-							});
+							win.webContents.send("set", {book_dialog_folder: path.dirname(file)});
 						} else {
 							win.webContents.send("call", "send_ack_book");		// Force an ack IPC to fix our menu check state.
 						}
@@ -3424,10 +3407,7 @@ function menu_build() {
 							checked: typeof config.book_depth !== "number",
 							click: () => {
 								set_checks("Play", "Book depth limit", "Unlimited");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: null,
-								});
+								win.webContents.send("set", {book_depth: null});
 							}
 						},
 						{
@@ -3436,10 +3416,7 @@ function menu_build() {
 							checked: config.book_depth === 20,
 							click: () => {
 								set_checks("Play", "Book depth limit", "20");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 20,
-								});
+								win.webContents.send("set", {book_depth: 20});
 							}
 						},
 						{
@@ -3448,10 +3425,7 @@ function menu_build() {
 							checked: config.book_depth === 18,
 							click: () => {
 								set_checks("Play", "Book depth limit", "18");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 18,
-								});
+								win.webContents.send("set", {book_depth: 18});
 							}
 						},
 						{
@@ -3460,10 +3434,7 @@ function menu_build() {
 							checked: config.book_depth === 16,
 							click: () => {
 								set_checks("Play", "Book depth limit", "16");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 16,
-								});
+								win.webContents.send("set", {book_depth: 16});
 							}
 						},
 						{
@@ -3472,10 +3443,7 @@ function menu_build() {
 							checked: config.book_depth === 14,
 							click: () => {
 								set_checks("Play", "Book depth limit", "14");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 14,
-								});
+								win.webContents.send("set", {book_depth: 14});
 							}
 						},
 						{
@@ -3484,10 +3452,7 @@ function menu_build() {
 							checked: config.book_depth === 12,
 							click: () => {
 								set_checks("Play", "Book depth limit", "12");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 12,
-								});
+								win.webContents.send("set", {book_depth: 12});
 							}
 						},
 						{
@@ -3496,10 +3461,7 @@ function menu_build() {
 							checked: config.book_depth === 10,
 							click: () => {
 								set_checks("Play", "Book depth limit", "10");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 10,
-								});
+								win.webContents.send("set", {book_depth: 10});
 							}
 						},
 						{
@@ -3508,10 +3470,7 @@ function menu_build() {
 							checked: config.book_depth === 8,
 							click: () => {
 								set_checks("Play", "Book depth limit", "8");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 8,
-								});
+								win.webContents.send("set", {book_depth: 8});
 							}
 						},
 						{
@@ -3520,10 +3479,7 @@ function menu_build() {
 							checked: config.book_depth === 6,
 							click: () => {
 								set_checks("Play", "Book depth limit", "6");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 6,
-								});
+								win.webContents.send("set", {book_depth: 6});
 							}
 						},
 						{
@@ -3532,10 +3488,7 @@ function menu_build() {
 							checked: config.book_depth === 4,
 							click: () => {
 								set_checks("Play", "Book depth limit", "4");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 4,
-								});
+								win.webContents.send("set", {book_depth: 4});
 							}
 						},
 						{
@@ -3544,10 +3497,7 @@ function menu_build() {
 							checked: config.book_depth === 2,
 							click: () => {
 								set_checks("Play", "Book depth limit", "2");
-								win.webContents.send("set", {
-									key: "book_depth",
-									value: 2,
-								});
+								win.webContents.send("set", {book_depth: 2});
 							}
 						},
 					]
@@ -3858,11 +3808,8 @@ function menu_build() {
 				{
 					label: "Permanently enable save",
 					click: () => {
-						config.save_enabled = true;			// The main process actually uses this variable...
-						win.webContents.send("set", {		// But it's the renderer process that saves the
-							key: "save_enabled",			// config file.
-							value: true,
-						});
+						config.save_enabled = true;								// The main process actually uses this variable...
+						win.webContents.send("set", {save_enabled: true});		// But it's the renderer process that saves the config file.
 					}
 				},
 				{
@@ -3902,10 +3849,7 @@ function menu_build() {
 							checked: config.update_delay === 25,
 							click: () => {
 								set_checks("Dev", "Spin rate", "Frenetic");
-								win.webContents.send("set", {
-									key: "update_delay",
-									value: 25,
-								});
+								win.webContents.send("set", {update_delay: 25});
 							}
 						},
 						{
@@ -3914,10 +3858,7 @@ function menu_build() {
 							checked: config.update_delay === 60,
 							click: () => {
 								set_checks("Dev", "Spin rate", "Fast");
-								win.webContents.send("set", {
-									key: "update_delay",
-									value: 60,
-								});
+								win.webContents.send("set", {update_delay: 60});
 							}
 						},
 						{
@@ -3926,10 +3867,7 @@ function menu_build() {
 							checked: config.update_delay === 125,
 							click: () => {
 								set_checks("Dev", "Spin rate", "Normal");
-								win.webContents.send("set", {
-									key: "update_delay",
-									value: 125,
-								});
+								win.webContents.send("set", {update_delay: 125});
 							}
 						},
 						{
@@ -3938,10 +3876,7 @@ function menu_build() {
 							checked: config.update_delay === 170,
 							click: () => {
 								set_checks("Dev", "Spin rate", "Relaxed");
-								win.webContents.send("set", {
-									key: "update_delay",
-									value: 170,
-								});
+								win.webContents.send("set", {update_delay: 170});
 							}
 						},
 						{
@@ -3950,10 +3885,7 @@ function menu_build() {
 							checked: config.update_delay === 250,
 							click: () => {
 								set_checks("Dev", "Spin rate", "Lazy");
-								win.webContents.send("set", {
-									key: "update_delay",
-									value: 250,
-								});
+								win.webContents.send("set", {update_delay: 250});
 							}
 						},
 					]
