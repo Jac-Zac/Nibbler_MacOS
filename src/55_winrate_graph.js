@@ -3,6 +3,8 @@
 function NewGrapher() {
 
 	let grapher = Object.create(null);
+	
+	grapher.dragging = false;			// Used by the event handlers in start.js
 
 	grapher.clear_graph = function() {
 

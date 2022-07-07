@@ -7,10 +7,28 @@ const electron = require("electron");
 
 electron.app.commandLine.appendSwitch("js-flags", "--expose_gc");
 
+// Config...
+
+const config_io = require("./modules/config_io");
+let config = config_io.load()[1];					// Do this early, it's a needed global.
+
+// disableHardwareAcceleration() needs to be called before the app is ready...
+
+let actually_disabled_hw_accel = false;
+
+if (config.disable_hw_accel) {
+	try {
+		electron.app.disableHardwareAcceleration();
+		actually_disabled_hw_accel = true;
+		console.log("Hardware acceleration for Nibbler (GUI, not engine) disabled by config setting.");
+	} catch (err) {
+		console.log("Failed to disable hardware acceleration.");
+	}
+}
+
 // Other requires...
 
 const alert = require("./modules/alert_main");
-const config_io = require("./modules/config_io");
 const custom_uci = require("./modules/custom_uci");
 const engineconfig_io = require("./modules/engineconfig_io");
 const messages = require("./modules/messages");
@@ -29,8 +47,6 @@ const open_dialog = electron.dialog.showOpenDialogSync || electron.dialog.showOp
 // Note that as the user adjusts menu items, our copy of the config will become
 // out of date. The renderer is responsible for having an up-to-date copy.
 
-let config = config_io.load()[1];		// Do this early, it's a needed global.
-
 let win;
 let menu = menu_build();
 let menu_is_set = false;
@@ -38,6 +54,8 @@ let menu_is_set = false;
 let loaded_engine = "";
 let loaded_weights = "";
 let loaded_evalfile = "";
+
+let have_warned_hw_accel_setting = false;
 
 // Avoid a theoretical race by checking whether the ready event has already occurred,
 // otherwise set an event listener for it...
@@ -83,11 +101,11 @@ function startup() {
 	});
 
 	win.webContents.once("crashed", () => {
-		alert(messages.renderer_crash);
+		alert(win, messages.renderer_crash);
 	});
 
 	win.webContents.once("unresponsive", () => {
-		alert(messages.renderer_hang);
+		alert(win, messages.renderer_hang);
 	});
 
 	win.once("close", (event) => {					// Note the once...
@@ -104,6 +122,13 @@ function startup() {
 	});
 
 	electron.ipcMain.once("renderer_ready", () => {
+
+		if (actually_disabled_hw_accel) {
+			win.webContents.send("call", {
+				fn: "console",
+				args: ["Hardware acceleration is disabled."],
+			});
+		}
 
 		// Open a file via command line. We must wait until the renderer has properly loaded before we do this.
 		// While it might seem like we could do this after "ready-to-show" I'm not 100% sure that the renderer
@@ -130,7 +155,7 @@ function startup() {
 	});
 
 	electron.ipcMain.on("alert", (event, msg) => {
-		alert(msg);
+		alert(win, msg);
 	});
 
 	electron.ipcMain.on("set_title", (event, msg) => {
@@ -242,9 +267,6 @@ function startup() {
 	);
 }
 
-// About the menu, remember that the renderer has a "queue" system (not really a queue, it drops all but 1
-// item) for calls, so only 1 "call" message can be sent at a time. The "set" message, however, is OK.
-
 function menu_build() {
 
 	const million = 1000 * 1000;
@@ -261,7 +283,7 @@ function menu_build() {
 					click: () => {
 						let s = `Nibbler ${electron.app.getVersion()} in Electron ${process.versions.electron}\n\n`;
 						s += `Engine: ${loaded_engine}\nWeights: ${loaded_weights || loaded_evalfile || "<auto>"}`;
-						alert(s);
+						alert(win, s);
 					}
 				},
 				{
@@ -326,7 +348,7 @@ function menu_build() {
 					accelerator: "CommandOrControl+S",
 					click: () => {
 						if (config.save_enabled !== true) {		// Note: exact test for true, not just any truthy value
-							alert(messages.save_not_enabled);
+							alert(win, messages.save_not_enabled);
 							return;
 						}
 						let file = save_dialog(win, {defaultPath: config.pgn_dialog_folder});
@@ -1550,7 +1572,7 @@ function menu_build() {
 						{
 							label: "About custom pieces",
 							click: () => {
-								alert(messages.about_custom_pieces);
+								alert(win, messages.about_custom_pieces);
 							}
 						}
 					]
@@ -2122,7 +2144,7 @@ function menu_build() {
 				{
 					label: "I want other size options!",
 					click: () => {
-						alert(messages.about_sizes);
+						alert(win, messages.about_sizes);
 					}
 				},
 			]
@@ -2142,7 +2164,7 @@ function menu_build() {
 						if (Array.isArray(files) && files.length > 0) {
 							let file = files[0];
 							if (file === process.argv[0] || path.basename(file).includes("client")) {
-								alert(messages.wrong_engine_exe);
+								alert(win, messages.wrong_engine_exe);
 								win.webContents.send("call", "send_ack_engine");	// Force an ack IPC to fix our menu check state.
 								return;
 							}
@@ -3078,7 +3100,7 @@ function menu_build() {
 						{
 							label: "Warning about threads",
 							click: () => {
-								alert(messages.thread_warning);
+								alert(win, messages.thread_warning);
 							}
 						},
 					]
@@ -3087,6 +3109,30 @@ function menu_build() {
 					label: "Hash",
 					submenu: [
 						{
+							label: "120 GB",
+							type: "checkbox",
+							checked: false,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "set_uci_option_permanent",
+									args: ["Hash", 120 * 1024]
+								});
+								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
+							label: "56 GB",
+							type: "checkbox",
+							checked: false,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "set_uci_option_permanent",
+									args: ["Hash", 56 * 1024]
+								});
+								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
 							label: "24 GB",
 							type: "checkbox",
 							checked: false,
@@ -3094,30 +3140,6 @@ function menu_build() {
 								win.webContents.send("call", {
 									fn: "set_uci_option_permanent",
 									args: ["Hash", 24 * 1024]
-								});
-								// Will receive an ack IPC which sets menu checks.
-							}
-						},
-						{
-							label: "20 GB",
-							type: "checkbox",
-							checked: false,
-							click: () => {
-								win.webContents.send("call", {
-									fn: "set_uci_option_permanent",
-									args: ["Hash", 20 * 1024]
-								});
-								// Will receive an ack IPC which sets menu checks.
-							}
-						},
-						{
-							label: "16 GB",
-							type: "checkbox",
-							checked: false,
-							click: () => {
-								win.webContents.send("call", {
-									fn: "set_uci_option_permanent",
-									args: ["Hash", 16 * 1024]
 								});
 								// Will receive an ack IPC which sets menu checks.
 							}
@@ -3212,7 +3234,7 @@ function menu_build() {
 						{
 							label: "I want other hash options!",
 							click: () => {
-								alert(messages.about_hashes);
+								alert(win, messages.about_hashes);
 							}
 						}
 					]
@@ -3785,7 +3807,7 @@ function menu_build() {
 				{
 					label: "About play modes",
 					click: () => {
-						alert(messages.about_versus_mode);
+						alert(win, messages.about_versus_mode);
 					}
 				}
 			]
@@ -3839,6 +3861,21 @@ function menu_build() {
 				},
 				{
 					type: "separator"
+				},
+				{
+					label: "Disable hardware acceleration for GUI",
+					type: "checkbox",
+					checked: config.disable_hw_accel,
+					click: () => {
+						win.webContents.send("call", {
+							fn: "toggle",
+							args: ["disable_hw_accel"],
+						});
+						if (!have_warned_hw_accel_setting) {
+							alert(win, "This will not take effect until you restart the GUI.");
+							have_warned_hw_accel_setting = true;
+						}
+					}
 				},
 				{
 					label: "Spin rate",
@@ -3920,7 +3957,7 @@ function menu_build() {
 					type: "separator"
 				},
 				{
-					label: "Non-recommended options",
+					label: "Hacks and kludges",
 					submenu: [
 						{
 							label: "Allow arbitrary scripts",
@@ -3943,9 +3980,6 @@ function menu_build() {
 									args: ["ignore_filesize_limits"],
 								});
 							}
-						},
-						{
-							type: "separator"
 						},
 						{
 							label: "Allow stopped analysis",
@@ -3977,6 +4011,17 @@ function menu_build() {
 								win.webContents.send("call", {
 									fn: "toggle",
 									args: ["never_grayout_infolines"],
+								});
+							}
+						},
+						{
+							label: "Use lowerbound / upperbound info",
+							type: "checkbox",
+							checked: config.accept_bounds,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "toggle",
+									args: ["accept_bounds"],
 								});
 							}
 						},
@@ -4028,6 +4073,20 @@ function menu_build() {
 									args: [null]
 								});
 								// Will receive an ack IPC which sets menu checks.
+							}
+						},
+						{
+							type: "separator"
+						},
+						{
+							label: "Clear log when opening",
+							type: "checkbox",
+							checked: config.clear_log,
+							click: () => {
+								win.webContents.send("call", {
+									fn: "toggle",
+									args: ["clear_log"],
+								});
 							}
 						},
 						{
@@ -4105,7 +4164,7 @@ function menu_build() {
 	scriptlist_in_menu.push({
 		label: "How to add scripts",
 		click: () => {
-			alert(messages.adding_scripts);
+			alert(win, messages.adding_scripts);
 		}
 	});
 	scriptlist_in_menu.push({
