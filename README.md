@@ -1,8 +1,6 @@
 # Nibbler
 
-### :warning: IMPORTANT FOR macOS INSTALLATION
-
-[**Follow the installation instructions**](#Installation---the-simple-way)
+### [:warning: IMPORTANT FOR MACOS INSTALLATION](#Installation---the-simple-way)
 
 _"By far the best ICCF analysis tool for Leela." &mdash; *jhorthos*_
 
