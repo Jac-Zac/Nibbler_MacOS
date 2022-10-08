@@ -1,5 +1,9 @@
 # Nibbler
 
+### :warning: IMPORTANT FOR macOS INSTALLATION
+
+[**Follow the installation instructions**](#Installation---the-simple-way)
+
 _"By far the best ICCF analysis tool for Leela." &mdash; *jhorthos*_
 
 Nibbler is a real-time analysis GUI for [Leela Chess Zero](http://lczero.org/play/quickstart/) (Lc0), which runs Leela in the background and constantly displays opinions about the current position. You can also compel the engine to evaluate one or more specific moves. Nibbler is loosely inspired by [Lizzie](https://github.com/featurecat/lizzie) and [Sabaki](https://github.com/SabakiHQ/Sabaki).
@@ -27,6 +31,8 @@ These days, Nibbler more-or-less works with traditional engines like [Stockfish]
 
 **Some MacOS standalone releases are uploaded every now and then under [Release](https://github.com/Jac-Zac/Nibbler_MacOS/releases)**
 
+> After the download run `xattr -cr Nibbler.dmg` before opening the dmg
+
 *You download the right file for your computer architecture, open it with any utility that can decompress it and then you can find the app in there.*
 
 If you are on Apple Silicon the Nibbler.app can be downloaded by downloading the Nibbler.dmg and then running `xattr -cr Nibbler.dmg`
@@ -35,7 +41,7 @@ _When you download it you have other things like a version of stokfish and lc0._
 
 ## Installation - the most up to date way
 
-##### Change directory, give executable permission and run the file 
+##### Change directory, give executable permission and run the file
 
     cd src && chmod +x build_mac.sh && ./build_mac.sh
 
@@ -48,7 +54,7 @@ I have customized my App to have it look a bit nicer in my set up, this is how i
 
 ![showcase1](https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/assets/my_setup.png)
 
-> The colors I used follow the nord theme. And also got rid of the annoying title bar. 
+> The colors I used follow the nord theme. And also got rid of the annoying title bar.
 
 *Those are the [`default`](src) src, and you can find [`mine here`](my_config)*
 
