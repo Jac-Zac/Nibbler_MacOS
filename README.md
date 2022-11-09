@@ -45,6 +45,13 @@ _When you download it you have other things like a version of stokfish and lc0._
 
 > I'll try to keep the src file decently up to date but if you want the latest version just switch them out for the one from the [nibbler](https://github.com/rooklift/nibbler) original project.
 
+#### Easy way to build it from source
+> You can just run the following one-liner
+
+```
+git clone https://github.com/rooklift/nibbler.git && cd nibbler wget https://github.com/Jac-Zac/Nibbler_MacOS/raw/main/nibbler.icns && cd src && curl https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/src/build_mac.sh | sh
+```
+
 
 ## My custom configuration
 
