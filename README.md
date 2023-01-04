@@ -49,7 +49,7 @@ _When you download it you have other things like a version of stokfish and lc0._
 > You can just run the following one-liner
 
 ```
-git clone https://github.com/rooklift/nibbler.git && cd nibbler && wget https://github.com/Jac-Zac/Nibbler_MacOS/raw/main/nibbler.icns && curl https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/src/build_mac.sh | sh
+git clone https://github.com/rooklift/nibbler.git && cd nibbler && wget https://github.com/Jac-Zac/Nibbler_MacOS/raw/main/nibbler.icns && curl https://raw.githubusercontent.com/Jac-Zac/Nibbler_MacOS/main/build_mac.sh | sh
 ```
 
 
