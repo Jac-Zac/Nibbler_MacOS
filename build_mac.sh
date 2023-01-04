@@ -30,9 +30,10 @@ if [ "$(ls ${ArmPrefix} | grep homebrew )" = "homebrew" ] || [ "$(ls ${IntelPref
     cd ..
 
     # move everything into the new src
-    cp -r files Nibbler/
+    cp -r files/src Nibbler/
 
-    cd Nibbler/files/src
+    # move into the correct directory
+    cd Nibbler/src
 
     # Change the name
     mv main.js index.js
