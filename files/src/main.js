@@ -3885,6 +3885,15 @@ function menu_build() {
 					type: "separator"
 				},
 				{
+					label: `Reload ${engineconfig_io.filename} (and restart engine)`,
+					click: () => {
+						win.webContents.send("call", "reload_engineconfig");
+					}
+				},
+				{
+					type: "separator"
+				},
+				{
 					label: "Random move",
 					accelerator: "CommandOrControl+/",
 					click: () => {
