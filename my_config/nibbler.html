@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<!-- https://content-security-policy.com/ -->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src http://www.chessdb.cn http://explorer.lichess.ovh">
+	<title>Nibbler</title>
+	<link rel="stylesheet" type="text/css" href="nibbler.css">
+</head>
+
+<body>
+
+	<!-- note to self, only use id for things the JS needs to see, they pollute the namespace -->
+
+	<div id="gridder">
+
+		<table id="boardsquares"></table>
+		<canvas id="canvas"></canvas>
+		<table id="boardfriends"></table>
+
+		<div id="rightgridder">
+
+			<div id="statusbox">Starting up...</div>
+			<div id="infobox"></div>
+			<canvas id="graph"></canvas>
+
+		</div>
+
+		<input type="text" id="fenbox" value="">
+
+		<div id="movelist"></div>
+
+	</div>
+
+	<!-- Special hidden items that show up when needed -->
+
+	<div id="fullbox"><div id="fullbox_content"></div></div>
+
+	<table id="promotiontable">
+		<tr>
+			<td class="promotion_q"></td>		<!-- Each promotion TD has a unique class to locate it with -->
+			<td class="promotion_r"></td>		<!-- because the actual move will be stored in the id.      -->
+			<td class="promotion_b"></td>
+			<td class="promotion_n"></td>
+		</tr>
+	</table>
+
+	<!-- Most of our components are fairly well encapsulated and could be in
+	module form. Still, for the time being we have everything in one namespace
+	and so load them in a particular order... -->
+
+	<script src="renderer/10_globals.js"></script>
+	<script src="renderer/20_utils.js"></script>
+	<script src="renderer/30_point.js"></script>
+	<script src="renderer/31_sliders.js"></script>
+	<script src="renderer/40_position.js"></script>
+	<script src="renderer/41_fen.js"></script>
+	<script src="renderer/42_perft.js"></script>
+	<script src="renderer/43_chess960.js"></script>
+	<script src="renderer/50_table.js"></script>
+	<script src="renderer/51_node.js"></script>
+	<script src="renderer/52_sorted_moves.js"></script>
+	<script src="renderer/55_winrate_graph.js"></script>
+	<script src="renderer/60_pgn_utils.js"></script>
+	<script src="renderer/61_pgn_parse.js"></script>
+	<script src="renderer/63_polyglot.js"></script>
+	<script src="renderer/65_loaders.js"></script>
+	<script src="renderer/71_tree_handler.js"></script>
+	<script src="renderer/72_tree_draw.js"></script>
+	<script src="renderer/75_looker.js"></script>
+	<script src="renderer/80_info.js"></script>
+	<script src="renderer/81_arrows.js"></script>
+	<script src="renderer/82_infobox.js"></script>
+	<script src="renderer/83_statusbox.js"></script>
+	<script src="renderer/90_engine.js"></script>
+	<script src="renderer/95_hub.js"></script>
+	<script src="renderer/99_start.js"></script>
+
+</body>
+</html>
